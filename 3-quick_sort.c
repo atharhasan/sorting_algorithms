@@ -25,16 +25,16 @@ void quick_sort(int *array, size_t size)
  * @high: Ending index of the partition
  * @size: Number of elements in the array
  */
-void quicksort_rec(int *array, int low, int high, size_t size)
+void quicksort_rec(int *array, size_t low, size_t high, size_t size)
 {
-	int par_idx;
-
 	if (low < high)
 	{
-		par_idx = lomuto_par(array, low, high, size);
+		size_t pi = lomuto_par(array, low, high, size);
 
-		quicksort_rec(array, low, par_idx - 1, size);
-		quicksort_rec(array, par_idx + 1, high, size);
+		if (pi != 0)
+			quicksort_rec(array, low, pi - 1, size);
+
+		quicksort_rec(array, pi + 1, high, size);
 	}
 }
 
@@ -49,28 +49,28 @@ void quicksort_rec(int *array, int low, int high, size_t size)
  *
  * Return: The index of the pivot after partitioning
  */
-int lomuto_par(int *array, int low, int high, size_t size)
+size_t lomuto_par(int *array, size_t low, size_t high, size_t size)
 {
-	int pivot, i, j, temp;
+	int temp, pivot = array[high];
+	size_t j, i = low - 1;
 
-	pivot = array[high];
-	i = low - 1;
-
-	for (j = low; j <= high - 1; j++)
+	for (j = low; j < high; j++)
 	{
 		if (array[j] <= pivot)
 		{
 			i++;
-
-			temp = array[i];
-			array[i] = array[j];
-			array[j] = temp;
-
-			print_array(array, size);
+			if (i != j)
+			{
+				temp = array[i];
+				array[i] = array[j];
+				array[j] = temp;
+				print_array(array, size);
+			}
 		}
 	}
 
-	if (i + 1 != high){
+	if (i + 1 != high)
+	{
 		temp = array[i + 1];
 		array[i + 1] = array[high];
 		array[high] = temp;
