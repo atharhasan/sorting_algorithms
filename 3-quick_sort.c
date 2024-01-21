@@ -2,8 +2,7 @@
 
 
 /**
- * quick_sort - Sorts an array of integers in ascending order
- * using the Quick sort algorithm with the Lomuto partition scheme.
+ * quick_sort - Sorts an array of integers in Quick sort.
  *
  * @array: The array to be sorted
  * @size: Number of elements in the array
